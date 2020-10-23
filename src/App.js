@@ -1,14 +1,15 @@
 import React from 'react';
-
-// Importing the Bootstrap CSS
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+//Components
 // import Img from './components/Img';
 // import Title from './components/Title';
 // import ReactLink from './components/ReactLink';
-import NavBar from './components/NavBar'
+import NavBar from './components/NavBar';
+import Home from './components/Home';
 
 import './App.css';
+// Importing the Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Container} from 'react-bootstrap';
 
 function App() {
   return (
@@ -19,7 +20,10 @@ function App() {
     //     <ReactLink />
     //   </header>
     // </div>
-    <NavBar />
+    <Container fluid>
+      <NavBar />
+      <Home />
+    </Container>
   );
 }
 

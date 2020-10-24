@@ -1,4 +1,6 @@
 import React from 'react';
+// Components
+import ItemCount from './ItemCount';
 //Bootstrap
 import { Media, Row } from 'react-bootstrap';
 // Media
@@ -14,6 +16,7 @@ const ListItem = (props) => {
                         <p>Based on: {props.realName}</p>
                     </Media.Body>
                 </Media>
+                <ItemCount />
             </Row>
         )
 }

@@ -15,11 +15,13 @@ function Counter({ amount, stock, min, initial }) {
         }
     }
 
-    return <>
-        <button onClick={onSubstract}>-</button>
-        <span>{count}</span>
-        <button onClick={onAdd}>+</button>
-    </>;
+    return (
+        <div className="btn-group py-3 pr-3" role="group">
+            <button className={`btn btn-secondary rounded shadow-none ${count == min ? "disabled" : ""}`} onClick={onSubstract}>-</button>
+            <button className="btn btn-secondary rounded shadow-none disabled">{count}</button>
+            <button className={`btn btn-secondary rounded shadow-none ${count == stock ? "disabled" : ""}`} onClick={onAdd}>+</button>
+        </div>
+    );
 }
 
 export default function ItemCount() {

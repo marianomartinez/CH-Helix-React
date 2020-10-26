@@ -12,7 +12,7 @@ function greeting() {return <h2>Welcome to "Helix Effects store"</h2>}; // !!! A
 
 function Home(props) {
     return (
-        <Container>
+        <Container className="bg-dark">
             <h2 style={style}>{greeting()}</h2>
             <ItemListContainer />
         </Container>

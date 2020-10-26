@@ -10,6 +10,8 @@ import './App.css';
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container} from 'react-bootstrap';
+// My master css file
+import './master.css';
 
 function App() {
   return (
@@ -20,7 +22,7 @@ function App() {
     //     <ReactLink />
     //   </header>
     // </div>
-    <Container fluid>
+    <Container fluid className="vh-100 p-0 bg-dark">
       <NavBar />
       <Home />
     </Container>

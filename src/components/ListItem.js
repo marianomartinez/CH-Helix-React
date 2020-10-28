@@ -16,7 +16,7 @@ const ListItem = (props) => {
                         <p className="my-1">Based on: {props.realName}</p>
                     </div>
                 </Media>
-                <ItemCount />
+                <ItemCount initial={2} min={1} stock={5} onAdd={count => alert(`Agregados al carrito: ${count}`)} />
             </Row>
         )
 }

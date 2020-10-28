@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
 
-function Counter({ amount, stock, min, initial }) {
+function ItemCount({ stock, min, initial, onAdd }) {
     const [count, setCount] = useState(initial);
 
-    function onSubstract() {
-        if (count > min) {
-            setCount(count - amount)
-        }
-    }
+    function valueUp() {if (count > min) {setCount(count - 1)}};
 
-    function onAdd() {
-        if (count < stock) {
-            setCount(count + amount)
-        }
+    function valueDown() {if (count < stock) {setCount(count + 1)}};
+
+    function onAdd(count) {
+        alert(`${count} items added to cart`)
     }
 
     return (
-        <div className="btn-group py-3 pr-3" role="group">
-            <button className={`btn btn-secondary rounded shadow-none ${count == min ? "disabled" : ""}`} onClick={onSubstract}>-</button>
-            <button className="btn btn-secondary rounded shadow-none disabled">{count}</button>
-            <button className={`btn btn-secondary rounded shadow-none ${count == stock ? "disabled" : ""}`} onClick={onAdd}>+</button>
+        <div className="p-3">
+            <div className="w-100 text-center btn-group" role="group">
+                <button className={`btn btn-secondary rounded shadow-none ${count === min ? "disabled" : ""}`} onClick={valueUp}>-</button>
+                <button className="btn btn-secondary rounded shadow-none disabled">{count}</button>
+                <button className={`btn btn-secondary rounded shadow-none ${count === stock ? "disabled" : ""}`} onClick={valueDown}>+</button>
+            </div>
+            <div className="w-100 text-center">
+                <button className="btn btn-secondary rounded shadow-none" onClick={() => onAdd(count)}>Add to cart</button>
+            </div>
         </div>
     );
 }
 
-export default function ItemCount() {
-    return <Counter amount={1} stock={5} min={1} initial={2}/>
-}
+export default ItemCount;

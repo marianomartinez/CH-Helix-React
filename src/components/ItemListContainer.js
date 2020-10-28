@@ -25,7 +25,11 @@ let items = [
 
 let title = "selected Category ('Distortion')"; // this should changed as each Category is selected
 
-function ItemListContainer() {    
+function ItemListContainer() {
+    
+    // useEffect(() => {
+        
+    // })  
     return (
         <Container>
             <h3 style={{textAlign: "center"}}>{title}</h3>

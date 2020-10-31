@@ -1,43 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // Components
-import ListItem from './ListItem';
-// Bootstrap
-import { Container } from 'react-bootstrap';
+import ItemList from './ItemList';
 
-// temporary list of items to show
-let items = [
-    {
-        id: 0,
-        hxName: 'Minotaur',
-        realName: 'Klon® Centaur'
-    },
-    {
-        id: 1,
-        hxName: 'Compulsive Drive',
-        realName: 'Fulltone® OCD'
-    },
-    {
-        id: 2,
-        hxName: 'Valve Driver',
-        realName: 'Chandler Tube Driver'
-    }
-]
+let title = "selected category ('Distortion')"; // this should changed as each Category is selected
 
-let title = "selected Category ('Distortion')"; // this should changed as each Category is selected
+const getItems = () => {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res([
+        {
+          id: 0,
+          title: 'Minotaur',
+          realName: 'Klon® Centaur',
+          price: 1000,
+          imageURL: ""
+        },
+        {
+          id: 1,
+          title: 'Compulsive Drive',
+          realName: 'Fulltone® OCD',
+          price: 130,
+          imageURL: ""
+        },
+        {
+          id: 2,
+          title: 'Valve Driver',
+          realName: 'Chandler Tube Driver',
+          price: 350,
+          imageURL: ""
+        }
+      ]);
+    }, 2000);
+  });
+};
 
-function ItemListContainer() {
-    
-    // useEffect(() => {
-        
-    // })  
-    return (
-        <Container>
-            <h3 style={{textAlign: "center"}}>{title}</h3>
-            <ul className="list-unstyled">
-                {items.map((item,i) => (<ListItem {...item} key={i}/>))}
-            </ul>
-        </Container>
-    )
+const ItemListContainer = () => {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    getItems()
+    .then(response => {
+      setItems(response)
+    })
+    .catch(err => {console.log(err)});
+  }, []);
+
+  return (
+    <div className="container">
+      <ItemList items={items} title={title} />
+    </div>
+  )
 }
 
 export default ItemListContainer;

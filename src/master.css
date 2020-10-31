@@ -2,3 +2,8 @@
     color:white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.itemLink:hover {
+    text-decoration: none;
+    background-color: red!important;
+}

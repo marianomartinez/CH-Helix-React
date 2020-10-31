@@ -12,7 +12,7 @@ function ItemCount({ stock, min, initial, onAdd }) {
     }
 
     return (
-        <div className="p-3">
+        <div className="col-2 py-2">
             <div className="w-100 text-center btn-group" role="group">
                 <button className={`btn btn-secondary rounded shadow-none ${count === min ? "disabled" : ""}`} onClick={valueUp}>-</button>
                 <button className="btn btn-secondary rounded shadow-none disabled">{count}</button>

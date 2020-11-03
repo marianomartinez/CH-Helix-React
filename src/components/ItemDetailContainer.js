@@ -38,7 +38,9 @@ const getItem = (itemId) => {
                   price: 350,
                   imageURL: "https://images.reverb.com/image/upload/s--oAknCBi5--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1480459840/zjqabzn9nls58se3wwg9.png"
                 }
-              ]);
+              ]
+              .filter(cadaObjeto => cadaObjeto.id == itemId) // !!! si pongo === no funciona, si pongo == funciona pero al compilar me dice que espera === en lugar de ==
+              );
         }, 3000);
     });
 };

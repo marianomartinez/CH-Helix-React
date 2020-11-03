@@ -1,0 +1,26 @@
+found 1 high severity vulnerability
+  run `npm audit fix` to fix them, or `npm audit` for details
+
+maria@Marianitem-5i MINGW64 /d/MARIANO/CODE-Projects/Projects/CH-finalProj/ch-helix-react (dev)
+$ npm audit
+
+                       === npm audit security report ===                        
+
+# Run  npm install react-scripts@4.0.0  to resolve 1 vulnerability
+SEMVER WARNING: Recommended action is a potentially breaking change
+
+  High            Prototype Pollution                                           
+
+  Package         object-path                                                   
+
+  Dependency of   react-scripts                                                 
+
+  Path            react-scripts > resolve-url-loader > adjust-sourcemap-loader  
+                  > object-path                                                 
+
+  More info       https://npmjs.com/advisories/1573                             
+
+
+
+found 1 high severity vulnerability in 1665 scanned packages
+  1 vulnerability requires semver-major dependency updates.

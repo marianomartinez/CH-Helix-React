@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function ItemCount({ stock, min, initial, onAdd }) {
+function ItemCount({ stock, min, initial, onAdd, style }) {
     const [count, setCount] = useState(initial);
 
     function valueUp() {if (count > min) {setCount(count - 1)}};
@@ -12,7 +12,7 @@ function ItemCount({ stock, min, initial, onAdd }) {
     }
 
     return (
-        <div className="col-2 py-2">
+        <div className={`${style} py-2`}>
             <div className="w-100 text-center btn-group" role="group">
                 <button className={`btn btn-secondary rounded shadow-none ${count === min ? "disabled" : ""}`} onClick={valueUp}>-</button>
                 <button className="btn btn-secondary rounded shadow-none disabled">{count}</button>

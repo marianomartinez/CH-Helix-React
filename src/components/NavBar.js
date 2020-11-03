@@ -1,4 +1,9 @@
 import React from 'react';
+
+// Router
+import { Link, NavLink } from 'react-router-dom';
+
+
 //Components
 import CartWidget from './CartWidget';
 // Bootstrap
@@ -11,33 +16,50 @@ function NavBar() {
   
   // El array de abajo lo hice con la intención de usar un .map para crear los NavDropdown.Item. 
   let categories = [
-    { name: 'Distortion' },
-    { name: 'Dynamics' },
-    { name: 'EQ' },
-    { name: 'Modulation' },
-    { name: 'Delay' },
-    { name: 'Reverb' },
-    { name: 'Pitch/Synth' },
-    { name: 'Filter' },
-    { name: 'Wah' },
-    { name: 'Guitar Amp' },
-    { name: 'Bass Amp' },
-    { name: 'Microphone' },
-    { name: 'Volume /Pan' },
-    { name: 'Looper' }
+    { id: 1,
+      name: 'Distortion' },
+    { id: 2,
+      name: 'Dynamics' },
+    { id: 3,
+      name: 'EQ' },
+    { id: 4,
+      name: 'Modulation' },
+    { id: 5,
+      name: 'Delay' },
+    { id: 6,
+      name: 'Reverb' },
+    { id: 7,
+      name: 'Pitch/Synth' },
+    { id: 8,
+      name: 'Filter' },
+    { id: 9,
+      name: 'Wah' },
+    { id: 10,
+      name: 'Guitar Amp' },
+    { id: 11,
+      name: 'Bass Amp' },
+    { id: 12,
+      name: 'Microphone' },
+    { id: 13,
+      name: 'Volume /Pan' },
+    { id: 14,
+      name: 'Looper' }
   ]
 
   return (
   <Navbar className="bg-secondary rounded-bottom" expand="md">
-    <Navbar.Brand className="text-light" href="#home">Helix Effects</Navbar.Brand>
+    <Navbar.Brand className="text-light" to="/">Helix Effects</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
 
         {/* !!! Estoy pasando el dropdown a este formato para no usar el de abajo, pero al hacer clic no despliega el listado. Voy a seguir probando. */}
         <div className="dropdown" role="group" aria-label="...">
-            <a className="btn btn-secondary rounded shadow-none" href="#home" role="button">Home</a>
-            <a className="btn btn-secondary rounded shadow-none mx-1" href="#about" role="button">About</a>
+          {/* <li key={categories.id}>
+            <Link className="btn btn-secondary rounded shadow-none" to="/" role="button">Home</Link>
+          </li> */}
+            <Link className="btn btn-secondary rounded shadow-none" to="/" role="button">Home</Link>
+            <Link className="btn btn-secondary rounded shadow-none mx-1" to="/about" role="button">About</Link>
             {/* <button type="button" className="btn btn-secondary rounded shadow-none dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Categories
             </button>
@@ -54,18 +76,19 @@ function NavBar() {
         <Dropdown>
           <Dropdown.Toggle variant="secondary" className="border-0">Categories</Dropdown.Toggle>
           <Dropdown.Menu className="bg-secondary w-100">
-          {categories.map((elements, i) => (
-            <Nav.Link className="bg-secondary text-light"
-            {...elements} key={i} href={`#categories/${elements.name}`}>{elements.name}</Nav.Link>))
-          }
+          {categories.map((categories, id) => (
+            <li key={categories.id}>
+              <NavLink activeClassName="currentCategory" className="bg-secondary text-light" {...categories} key={id} to={`/categories/${categories.id}`}>{categories.name}</NavLink>
+            </li>
+          ))}
           </Dropdown.Menu>
         </Dropdown>
 
 
         {/* <NavDropdown className="bg-secondary" title="Categories">
-          {categories.map((elements, i) => (
+          {categories.map((elements, id) => (
             <NavDropdown.Item className="bg-secondary text-light"
-            {...elements} key={i} href={`#categories/${elements.name}`}>{elements.name}</NavDropdown.Item>))
+            {...elements} key={id} href={`#categories/${elements.name}`}>{elements.name}</NavDropdown.Item>))
           }
         </NavDropdown> */}
 

@@ -10,7 +10,7 @@ import "react-loadingmask/dist/react-loadingmask.css";
 
 // Bootstrap
 
-let title = "selected category ('Distortion')"; // this should changed as each Category is selected
+let title = "selected category ('Distortion')"; // this should change as each Category is selected
 
 
 const getItem = (itemId) => {
@@ -38,9 +38,7 @@ const getItem = (itemId) => {
                   price: 350,
                   imageURL: "https://images.reverb.com/image/upload/s--oAknCBi5--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1480459840/zjqabzn9nls58se3wwg9.png"
                 }
-              ]
-              .filter(cadaObjeto => cadaObjeto.id == itemId) // !!! si pongo === no funciona, si pongo == funciona pero al compilar me dice que espera === en lugar de ==
-              );
+              ].filter(item => item.id === itemId));
         }, 3000);
     });
 };
@@ -49,31 +47,18 @@ const getItem = (itemId) => {
 const ItemDetailContainer = () => {
 
     const [item, setItem] = useState([]);
-    const [loading, setLoading] = useState(null);
+    const [loading, setLoading] = useState(true);
     const { itemId } = useParams(); // this is de URLs param. Add each param to be captured from the URL
 
     useEffect(() => {
-        setLoading(true);
-        getItem(itemId)
+        getItem(Number(itemId))
             .then(response => {
                 setLoading(false);
                 setItem(response[0]);
             })
             .catch(err => { console.log(err) });
-        // console.log(item)
     }, [itemId]);
-
-
-    // // This version watches id changes and re-renders
-    // // useEffect(() => {
-    // //     getItem(id)
-    // //         .then(response => {
-    // //             setItem(response)
-    // //         })
-    // //         .catch(err => { console.log(err) });
-    // // }, [id]);
-
-    console.log(item)
+    
     return <>
         <LoadingMask loading={loading}>
         <div className="container">

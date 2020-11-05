@@ -15,7 +15,7 @@ const Item = (props) => {
             <Link to={`/item/${props.id}`} className="text-decoration-none">
                 <div className="row bg-secondary mb-1 rounded d-flex">
                     <figure className="col-1  my-auto">
-                        <img className="w-100 rounded" src={icon} alt="distortion" />
+                        <img className="w-100 rounded" src={props.imageURL} alt="distortion" />
                     </figure>
                     <div className="col-8 pl-2 my-auto rounded">
                         <p className="my-1">Model: {props.title}</p>

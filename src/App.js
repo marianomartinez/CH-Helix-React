@@ -12,6 +12,7 @@ import NavBar from './components/NavBar';
 import ItemListContainer from './components/ItemListContainer';
 import About from './components/About';
 import ItemDetailContainer from './components/ItemDetailContainer';
+import Cart from './components/Cart';
 
 import './App.css';
 // Importing the Bootstrap CSS
@@ -35,7 +36,7 @@ function App() {
             <ItemDetailContainer />
           </Route>
           <Route path="/cart">
-            {/* <Cart /> */}
+            <Cart />
           </Route>
         </Switch>
       </div>

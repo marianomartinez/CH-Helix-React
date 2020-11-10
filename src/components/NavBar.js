@@ -2,6 +2,8 @@ import React from 'react';
 
 // Router
 import { Link, NavLink } from 'react-router-dom';
+// import { useCartContext } from '../context/CartContext';
+// import { CartContext } from '../context/CartContext';
 
 
 //Components
@@ -13,6 +15,8 @@ import '../master.css';
 
 
 function NavBar() {
+
+  // const { cart } = useCartContext(); // en el carrito, con cart.length, puedo ver cuántos items hay
   
   // El array de abajo lo hice con la intención de usar un .map para crear los NavDropdown.Item. 
   let categories = [

@@ -13,7 +13,7 @@ import "react-loadingmask/dist/react-loadingmask.css";
 let title = "selected category ('Distortion')"; // this should change as each Category is selected
 
 
-const getItem = (itemId) => {
+const getItemById = (itemId) => {
     return new Promise((res) => {
         setTimeout(() => {
             res([
@@ -38,7 +38,7 @@ const getItem = (itemId) => {
                   price: 350,
                   imageURL: "https://images.reverb.com/image/upload/s--oAknCBi5--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1480459840/zjqabzn9nls58se3wwg9.png"
                 }
-              ].filter(item => item.id === itemId));
+              ].filter(item => item.id === itemId)); // probar cambiar por .find
         }, 3000);
     });
 };
@@ -51,13 +51,13 @@ const ItemDetailContainer = () => {
     const { itemId } = useParams(); // this is de URLs param. Add each param to be captured from the URL
 
     useEffect(() => {
-        getItem(Number(itemId))
+        getItemById(Number(itemId))
             .then(response => {
                 setLoading(false);
                 setItem(response[0]);
             })
             .catch(err => { console.log(err) });
-    }, [itemId]);
+    }, [itemId]); // this [itemId] waits for itemId value change and re-runs the effect
     
     return <>
         <LoadingMask loading={loading}>

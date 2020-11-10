@@ -3,6 +3,8 @@ import React from 'react';
 // React-router-dom
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+// import CartProvider /* , { CartContext }*/ from './context/CartContext';
+
 //Components
 // import Img from './components/Img';
 // import Title from './components/Title';
@@ -22,25 +24,27 @@ import './master.css';
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="container-fluid vh-100 p-0 bg-dark">
-        <NavBar />
-        <Switch> {/* Acá van mis rutas */}
-          <Route exact path="/">
-            <ItemListContainer />
-          </Route>
-          <Route exact path="/about">
-            <About />
-          </Route>
-          <Route path="/item/:itemId">
-            <ItemDetailContainer />
-          </Route>
-          <Route path="/cart">
-            <Cart />
-          </Route>
-        </Switch>
-      </div>
-    </BrowserRouter>
+    // <CartProvider defaultCart={[]}>
+      <BrowserRouter>
+        <div className="container-fluid vh-100 p-0 bg-dark">
+          <NavBar />
+          <Switch> {/* Acá van mis rutas */}
+            <Route exact path="/">
+              <ItemListContainer />
+            </Route>
+            <Route exact path="/about">
+              <About />
+            </Route>
+            <Route path="/item/:itemId">
+              <ItemDetailContainer />
+            </Route>
+            <Route path="/cart">
+              <Cart />
+            </Route>
+          </Switch>
+        </div>
+      </BrowserRouter>
+    // </CartProvider>
   );
 }
 

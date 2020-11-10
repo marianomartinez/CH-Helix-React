@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import ItemCount from './ItemCount';
 
 // Media
-import icon from '../images/blocks/distortion.PNG';
+// import icon from '../images/blocks/distortion.PNG';
 
 const Item = (props) => {
     return (

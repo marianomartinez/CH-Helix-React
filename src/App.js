@@ -3,7 +3,7 @@ import React from 'react';
 // React-router-dom
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-// import CartProvider /* , { CartContext }*/ from './context/CartContext';
+import CartProvider /* , { CartContext }*/ from './context/CartContext';
 
 //Components
 // import Img from './components/Img';
@@ -24,7 +24,7 @@ import './master.css';
 
 function App() {
   return (
-    // <CartProvider defaultCart={[]}>
+    <CartProvider defaultCart={[]}>
       <BrowserRouter>
         <div className="container-fluid vh-100 p-0 bg-dark">
           <NavBar />
@@ -44,7 +44,7 @@ function App() {
           </Switch>
         </div>
       </BrowserRouter>
-    // </CartProvider>
+    </CartProvider>
   );
 }
 

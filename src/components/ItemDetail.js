@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import {useCartContext} from '../context/CartContext';
+import { useCartContext } from '../context/CartContext';
 
 // Router
 import { Link } from 'react-router-dom';
@@ -10,12 +10,10 @@ import ItemCount from './ItemCount';
 // Media
 // import icon from '../images/blocks/distortion.PNG';
 
-// const { add } = useCartContext();
 // function onAdd(qty) {
 //   console.log(`Adding ${qty}`);
 // }
 const ItemDetail = ({ item }) => {
-
   const [qtyToCart, setQtyToCart] = useState();
   const [checkoutBtn, setCheckoutBtn] = useState(false);
 
@@ -25,6 +23,8 @@ const ItemDetail = ({ item }) => {
     alert(`ItemDetail has (qtyToCart) ${qtyToCart} item(s) on cart`);
     setCheckoutBtn(true);
   }
+
+  const { addToCart } = useCartContext();
 
   return (
     <div className="container">
@@ -43,13 +43,13 @@ const ItemDetail = ({ item }) => {
           <div className="align-self-end">
             {/* <ItemCount initial={2} min={1} stock={5} onAdd={count => alert(`Agregados al carrito: ${count}`)} /> */}
             {!checkoutBtn && <ItemCount initial={2} min={1} stock={5} onAddClick={onAddToCart} />}
-            {checkoutBtn && 
-            <Link to="/cart">
-              <div className="py-2">
-                <div className="w-100 text-center">
-                  <button className="btn btn-secondary rounded shadow-none">Checkout</button>
-                </div></div>
-            </Link>}
+            {checkoutBtn &&
+              <Link to="/cart">
+                <div className="py-2">
+                  <div className="w-100 text-center">
+                    <button onClick={() => addToCart(item, qtyToCart)} className="btn btn-secondary rounded shadow-none">Confirm to cart</button>
+                  </div></div>
+              </Link>}
           </div>
         </div>
       </div>

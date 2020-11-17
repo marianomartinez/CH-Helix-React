@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 // Components
 import ItemList from './ItemList';
+import { getFirestore } from '../firebase';
 
-let style = {"text-align": "center"}
+let style = { "text-align": "center" }
 
-function greeting() {return <h2>Welcome to "Helix Effects store"</h2>}; // !!! AGREGAR styling
+function greeting() { return <h2>Welcome to "Helix Effects store"</h2> }; // !!! AGREGAR styling
 
 let title = "selected category ('Distortion')"; // this should changed as each Category is selected
 
+
+// OLD LOCAL VERSION
 const getItems = () => {
   return new Promise((res) => {
     setTimeout(() => {
@@ -34,10 +37,9 @@ const getItems = () => {
           imageURL: "https://images.reverb.com/image/upload/s--oAknCBi5--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1480459840/zjqabzn9nls58se3wwg9.png"
         }
       ]);
-    }, 2000);
+    }, 500);
   });
 };
-
 const ItemListContainer = () => {
   const [items, setItems] = useState([]);
   useEffect(() => {
@@ -47,6 +49,41 @@ const ItemListContainer = () => {
     })
     .catch(err => {console.log(err)});
   }, []);
+
+
+
+/*
+// NEW VERSION, DATA FROM FIREBASE
+const ItemListContainer = () => {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const db = getFirestore();
+    const itemCollection = db.collection("items");
+    itemCollection.get().then((querySnapshot) => {
+      if(querySnapshot.size === 0) {console.log('No results')};
+      setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
+    })
+    .catch(err => { console.log(err) });
+}, []);
+*/
+
+
+// // NEW VERSION, DATA FROM FIREBASE with a filter
+// const ItemListContainer = () => {
+//   const [items, setItems] = useState([]);
+//   useEffect(() => {
+//     const db = getFirestore();
+//     const itemCollection = db.collection("items");
+//     const pricedItems = itemCollection.where('price', '>', 400); // adds this
+//     const catCollection = itemCollection.where('categoryId', '==', 1) // or adds this
+//     pricedItems.get().then((querySnapshot) => { // and changes which filter is read
+//       if(querySnapshot.size === 0) {console.log('No results')};
+//       setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
+//     })
+//     // .catch(err => { console.log(err) });
+// }, []);
+
+
 
   return (
     <div className="container bg-dark">

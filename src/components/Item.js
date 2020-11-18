@@ -14,7 +14,7 @@ const Item = (props) => {
         <div className="container">
             <Link to={`/item/${props.id}`} className="text-decoration-none">
                 <div className="row bg-secondary mb-1 rounded d-flex">
-                    <figure className="col-1  my-auto">
+                    <figure className="col-1 my-auto">
                         <img className="w-100 rounded" src={props.imageURL} alt="distortion" />
                     </figure>
                     <div className="col-8 pl-2 my-auto rounded">

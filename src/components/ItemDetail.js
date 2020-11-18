@@ -19,8 +19,8 @@ const ItemDetail = ({ item }) => {
 
   function onAddToCart(count) {
     setQtyToCart(count);
-    alert(`ItemDetail has (count) ${count} item(s) on cart`);
-    alert(`ItemDetail has (qtyToCart) ${qtyToCart} item(s) on cart`);
+    // alert(`ItemDetail has (count) ${count} item(s) on cart`);
+    // alert(`ItemDetail has (qtyToCart) ${qtyToCart} item(s) on cart`);
     setCheckoutBtn(true);
   }
 

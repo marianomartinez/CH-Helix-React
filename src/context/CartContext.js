@@ -19,6 +19,7 @@ export default function CartProvider({ defaultCart = [], children }) {
       const itemsInCart = [...cart, newItem];
       setCart(itemsInCart);
     } else {
+      // Actualiza el item y actualiza el estado
       itemCheck.qtyInCart = itemCheck.qtyInCart + qtyToCart;
     }
   }

@@ -9,8 +9,9 @@ function greeting() { return <h2>Welcome to "Helix Effects store"</h2> }; // !!!
 
 let title = "selected category ('Distortion')"; // this should changed as each Category is selected
 
-
+/*
 // OLD LOCAL VERSION
+// Array of items (local DB)
 const getItems = () => {
   return new Promise((res) => {
     setTimeout(() => {
@@ -40,6 +41,8 @@ const getItems = () => {
     }, 500);
   });
 };
+
+// FUNCTIONAL COMPONENT DECLARATION 
 const ItemListContainer = () => {
   const [items, setItems] = useState([]);
   useEffect(() => {
@@ -49,23 +52,25 @@ const ItemListContainer = () => {
     })
     .catch(err => {console.log(err)});
   }, []);
+*/
 
 
 
-/*
 // NEW VERSION, DATA FROM FIREBASE
 const ItemListContainer = () => {
   const [items, setItems] = useState([]);
+  console.log('log: ',items);
   useEffect(() => {
     const db = getFirestore();
-    const itemCollection = db.collection("items");
+    const itemCollection = db.collection("items")
+    const filtered = itemCollection.where('itemId', '==', '2');
     itemCollection.get().then((querySnapshot) => {
       if(querySnapshot.size === 0) {console.log('No results')};
       setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
     })
     .catch(err => { console.log(err) });
 }, []);
-*/
+
 
 
 // // NEW VERSION, DATA FROM FIREBASE with a filter

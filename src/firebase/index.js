@@ -2,6 +2,14 @@ import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
 const app = firebase.initializeApp({
+  // apiKey: "AIzaSyB87sjiU5Fa27EdRbBFUsha6RgOasNoK8A",
+  // authDomain: "ch-helix-react.firebaseapp.com",
+  // databaseURL: "https://ch-helix-react.firebaseio.com",
+  // projectId: "ch-helix-react",
+  // storageBucket: "ch-helix-react.appspot.com",
+  // messagingSenderId: "44284790541",
+  // appId: "1:44284790541:web:f6cb192609e4ba85cc5244",
+
   apiKey: process.env.REACT_APP_FS_API_KEY,
   authDomain: process.env.REACT_APP_FS_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_FS_DATABASE_URL,

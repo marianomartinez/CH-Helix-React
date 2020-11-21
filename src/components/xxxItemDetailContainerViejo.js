@@ -3,21 +3,16 @@ import React, { useState, useEffect } from 'react';
 // Routes
 import { useParams } from 'react-router-dom';
 
-// Firebase
-import { getFirestore } from '../firebase';
-
 // Components
 import ItemDetail from './ItemDetail';
-// import LoadingMask from "react-loadingmask";
+import LoadingMask from "react-loadingmask";
 import "react-loadingmask/dist/react-loadingmask.css";
 
 // Bootstrap
 
 let title = "selected category ('Distortion')"; // this should change as each Category is selected
 
-/*
-// OLD LOCAL DB
-// Array of items (local DB)
+
 const getItemById = (itemId) => {
     return new Promise((res) => {
         setTimeout(() => {
@@ -48,8 +43,9 @@ const getItemById = (itemId) => {
     });
 };
 
-// OLD FUNCTIONAL COMPONENT DECLARATION FOR LOCAL DB
+
 const ItemDetailContainer = () => {
+
     const [item, setItem] = useState([]);
     const [loading, setLoading] = useState(true);
     const { itemId } = useParams(); // this is de URLs param. Add each param to be captured from the URL
@@ -62,53 +58,14 @@ const ItemDetailContainer = () => {
             })
             .catch(err => { console.log(err) });
     }, [itemId]); // this [itemId] waits for itemId value change and re-runs the effect
-*/
-
-
-
-// NEW VERSION, DATA FROM FIREBASE CON WHERE
-// const ItemDetailContainer = () => {
-//     const [item, setItem] = useState({ realName: 'cargando' });
-//     const { itemId } = useParams();
-//     console.log('log: ', item);
-//     useEffect(() => {
-//         const db = getFirestore();
-//         const itemCollection = db.collection("items")
-//         const filtered = itemCollection.where('id', '==', itemId);
-//         filtered.get().then((querySnapshot) => {
-//             if (querySnapshot.size === 0) { console.log('No results') };
-//             setItem(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
-//         })
-//             .catch(err => { console.log(err) });
-//     }, []);
-
-
-// NEW VERSION, DATA FROM FIREBASE CON DOC
-const ItemDetailContainer = () => {
-    const [item, setItem] = useState({ realName: 'cargando' });
-    const { itemId } = useParams();
-    console.log('log: ', item);
-    useEffect(() => {
-        const db = getFirestore();
-        const itemCollection = db.collection("items");
-        const filtered = itemCollection.doc(itemId);
-        filtered.get().then((doc) => {
-            if (!doc.exists) { console.log('No results') };
-            setItem({ id: doc.id, ...doc.data() }); // ID is in de document. The document has data. This create an object with properties form different sources.
-        })
-            .catch(err => { console.log(err) });
-    }, []);
-
-
-
+    
     return <>
-        {/* <LoadingMask > */}
-        {/* <LoadingMask loading={loading}> */}
+        <LoadingMask loading={loading}>
         <div className="container">
             <h3 style={{ textAlign: "center" }}>{title}</h3>
             <ItemDetail item={item} title={title} />
         </div>
-        {/* </LoadingMask> */}
+        </LoadingMask>
     </>
 }
 

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 // Components
 import ItemList from './ItemList';
 import { getFirestore } from '../firebase';
+import { useParams } from 'react-router-dom';
 
 let style = { "text-align": "center" }
 
 function greeting() { return <h2>Welcome to "Helix Effects store"</h2> }; // !!! AGREGAR styling
 
-let title = "selected category ('Distortion')"; // this should changed as each Category is selected
+// let title = "selected category ('Distortion')"; // this should changed as each Category is selected
 
 /*
 // OLD LOCAL VERSION
@@ -57,45 +58,45 @@ const ItemListContainer = () => {
 
 
 // NEW VERSION, DATA FROM FIREBASE
-const ItemListContainer = () => {
-  const [items, setItems] = useState([]);
-  console.log('log: ',items);
-  useEffect(() => {
-    const db = getFirestore();
-    const itemCollection = db.collection("items")
-    const filtered = itemCollection.where('itemId', '==', '2');
-    itemCollection.get().then((querySnapshot) => {
-      if(querySnapshot.size === 0) {console.log('No results')};
-      setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
-    })
-    .catch(err => { console.log(err) });
-}, []);
-
-
-
-// // NEW VERSION, DATA FROM FIREBASE with a filter
 // const ItemListContainer = () => {
 //   const [items, setItems] = useState([]);
 //   useEffect(() => {
 //     const db = getFirestore();
 //     const itemCollection = db.collection("items");
-//     const pricedItems = itemCollection.where('price', '>', 400); // adds this
-//     const catCollection = itemCollection.where('categoryId', '==', 1) // or adds this
-//     pricedItems.get().then((querySnapshot) => { // and changes which filter is read
-//       if(querySnapshot.size === 0) {console.log('No results')};
+//     itemCollection.get().then((querySnapshot) => {
+//       if (querySnapshot.size === 0) { console.log('No results') };
 //       setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
 //     })
-//     // .catch(err => { console.log(err) });
-// }, []);
+//       .catch(err => { console.log(err) });
+//   }, []);
 
 
 
-  return (
-    <div className="container bg-dark">
-      <h2 style={style}>{greeting()}</h2>
-      <ItemList items={items} title={title} />
-    </div>
-  )
-}
+  // NEW VERSION, DATA FROM FIREBASE with a filter
+  const ItemListContainer = () => {
+    const [items, setItems] = useState([]);
+    const { categoryId } = useParams();
+    console.log(categoryId);
+    useEffect(() => {
+      const db = getFirestore();
+      const itemCollection = db.collection("items");
+      // const pricedItems = itemCollection.where('price', '>', 400); // adds this
+      const catCollection = itemCollection.where('categoryId', '==', categoryId) // or adds this
+      catCollection.get().then((querySnapshot) => { // and changes which filter is read
+        if (querySnapshot.size === 0) { console.log('No results') };
+        setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
+      })
+      .catch(err => { console.log(err) });
+    }, [categoryId]);
 
-export default ItemListContainer;
+
+
+    return (
+      <div className="container bg-dark">
+        <h2 style={style}>{greeting()}</h2>
+        <ItemList items={items} title={categoryId} />
+      </div>
+    )
+  }
+
+  export default ItemListContainer;

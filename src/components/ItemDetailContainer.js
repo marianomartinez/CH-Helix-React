@@ -8,7 +8,7 @@ import { getFirestore } from '../firebase';
 
 // Components
 import ItemDetail from './ItemDetail';
-// import LoadingMask from "react-loadingmask";
+import LoadingMask from "react-loadingmask";
 import "react-loadingmask/dist/react-loadingmask.css";
 
 // Bootstrap
@@ -66,7 +66,7 @@ const ItemDetailContainer = () => {
 
 
 
-// NEW VERSION, DATA FROM FIREBASE CON WHERE
+// NEW VERSION, DATA FROM FIREBASE CON WHERE ???
 // const ItemDetailContainer = () => {
 //     const [item, setItem] = useState({ realName: 'cargando' });
 //     const { itemId } = useParams();
@@ -85,7 +85,8 @@ const ItemDetailContainer = () => {
 
 // NEW VERSION, DATA FROM FIREBASE CON DOC
 const ItemDetailContainer = () => {
-    const [item, setItem] = useState({ realName: 'cargando' });
+    const [loading, setLoading] = useState(true);
+    const [item, setItem] = useState({});
     const { itemId } = useParams();
     console.log('log: ', item);
     useEffect(() => {
@@ -95,20 +96,20 @@ const ItemDetailContainer = () => {
         filtered.get().then((doc) => {
             if (!doc.exists) { console.log('No results') };
             setItem({ id: doc.id, ...doc.data() }); // ID is in de document. The document has data. This create an object with properties form different sources.
+            setLoading(false);
         })
             .catch(err => { console.log(err) });
-    }, []);
+    }, [itemId]);
 
 
 
     return <>
-        {/* <LoadingMask > */}
-        {/* <LoadingMask loading={loading}> */}
+        <LoadingMask loading={loading}>
         <div className="container">
             <h3 style={{ textAlign: "center" }}>{title}</h3>
             <ItemDetail item={item} title={title} />
         </div>
-        {/* </LoadingMask> */}
+        </LoadingMask>
     </>
 }
 

@@ -80,13 +80,20 @@ const ItemListContainer = () => {
     useEffect(() => {
       const db = getFirestore();
       const itemCollection = db.collection("items");
-      // const pricedItems = itemCollection.where('price', '>', 400); // adds this
-      const catCollection = itemCollection.where('categoryId', '==', categoryId) // or adds this
-      catCollection.get().then((querySnapshot) => { // and changes which filter is read
-        if (querySnapshot.size === 0) { console.log('No results') };
-        setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
-      })
-      .catch(err => { console.log(err) });
+      if(categoryId === undefined) {
+        itemCollection.get().then((querySnapshot) => { // and changes which filter is read
+          if (querySnapshot.size === 0) { console.log('No results') };
+          setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
+        })
+        .catch(err => { console.log(err) });  
+      } else {
+        const catCollection = itemCollection.where('categoryId', '==', categoryId) // or adds this
+        catCollection.get().then((querySnapshot) => { // and changes which filter is read
+          if (querySnapshot.size === 0) { console.log('No results') };
+          setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))); // ID is in de document. The document has data. This create an object with properties form different sources.
+        })
+        .catch(err => { console.log(err) });
+      }
     }, [categoryId]);
 
 

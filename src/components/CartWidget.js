@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 // import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
 
 function CartWidget() {
-    const { cart, removeFromCart, clearCart } = useCartContext();
+    const { cart } = useCartContext();
 
     let quantities = cart.map(item => item.qtyInCart);
     let cartQty = quantities.reduce((total, num) => total + num, 0);

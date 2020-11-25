@@ -76,7 +76,6 @@ const ItemListContainer = () => {
   const ItemListContainer = () => {
     const [items, setItems] = useState([]);
     const { categoryId } = useParams();
-    console.log(categoryId);
     useEffect(() => {
       const db = getFirestore();
       const itemCollection = db.collection("items");

@@ -15,6 +15,7 @@ import ItemListContainer from './components/ItemListContainer';
 import About from './components/About';
 import ItemDetailContainer from './components/ItemDetailContainer';
 import Cart from './components/Cart';
+import OrderCompleted from './components/OrderCompleted';
 
 import './App.css';
 // Importing the Bootstrap CSS
@@ -43,6 +44,9 @@ function App() {
             </Route>
             <Route exact path="/cart">
               <Cart />
+            </Route>
+            <Route exact path="/orderCompleted">
+              <OrderCompleted />
             </Route>
           </Switch>
         </div>

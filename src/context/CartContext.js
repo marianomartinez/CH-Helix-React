@@ -13,7 +13,6 @@ export default function CartProvider({ defaultCart = [], children }) {
   function addToCart(newItem, qtyToCart) {
     newItem.qtyInCart = qtyToCart;
     const itemCheck = cart.find( ({ id }) => id === newItem.id );
-    console.log('Item existente: ' + itemCheck);
     if (itemCheck === undefined) {
       // Agrega el item y actualiza el estado
       const itemsInCart = [...cart, newItem];

@@ -1,5 +1,4 @@
 import React from 'react';
-// Components
 import Item from './Item';
 
 const ItemList = ({ items, title }) => {

@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 
-// Router
-// import { Link } from 'react-router-dom';
-
-function ItemCount({ stock, min, initial, onAdd, style, onAddClick }) {
+export default function ItemCount({ stock, min, initial, onAddClick }) {
     const [count, setCount] = useState(initial);
-
     function valueUp() { if (count > min) { setCount(count - 1) } };
-
     function valueDown() { if (count < stock) { setCount(count + 1) } };
-
     function onAdd() {
         alert(`ItemCount added ${count} item(s) to cart`);
         onAddClick(count);
@@ -28,5 +22,3 @@ function ItemCount({ stock, min, initial, onAdd, style, onAddClick }) {
         </div>
     );
 }
-
-export default ItemCount;

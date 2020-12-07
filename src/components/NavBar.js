@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 //Components
 import CartWidget from './CartWidget';
 // Bootstrap
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Dropdown } from 'react-bootstrap';
 // My general css file
 import '../master.css';
 
@@ -91,11 +91,10 @@ function NavBar() {
             <Link className="btn btn-secondary rounded shadow-none" to="/" role="button">Home</Link>
           </li> */}
             <Link className="btn btn-secondary rounded shadow-none" to="/" role="button">Home</Link>
-            <Link className="btn btn-secondary rounded shadow-none mx-1" to="/about" role="button">About</Link>
             {/* <button type="button" className="btn btn-secondary rounded shadow-none dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Categories
-            </button>
-            <div className="dropdown-menu">
+              </button>
+              <div className="dropdown-menu">
               <a className="dropdown-item" href="#action">Action</a>
               <a className="dropdown-item" href="#action">Another action</a>
               <a className="dropdown-item" href="#action">Something else here</a>
@@ -109,9 +108,9 @@ function NavBar() {
             <Dropdown.Toggle variant="secondary" className="border-0">Categories</Dropdown.Toggle>
             <Dropdown.Menu className="bg-secondary w-100">
               {categories.map((categories, id) => (
-                  <li key={categories.id}>
-                    <Link activeClassName="currentCategory" className="bg-secondary text-light" {...categories} key={id} to={`/category/${categories.name}`}>{categories.name}</Link>
-                  </li>
+                <li key={categories.id}>
+                  <Link activeClassName="currentCategory" className="bg-secondary text-light" {...categories} key={id} to={`/categories/${categories.name}`}>{categories.name}</Link>
+                </li>
               ))}
             </Dropdown.Menu>
           </Dropdown>
@@ -125,6 +124,7 @@ function NavBar() {
         </NavDropdown> */}
 
 
+          <Link className="btn btn-secondary rounded shadow-none mx-1" to="/about" role="button">About</Link>
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />

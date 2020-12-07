@@ -1,14 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useCartContext } from '../context/CartContext';
+import UserForm from './UserForm';
+import { Link, /* useHistory */ } from 'react-router-dom';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { getFirestore } from '../firebase';
 
 const Cart = () => {
 
+  // --- BUYER ---
+
+  const [buyer, setBuyer] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userPhone, setUserPhone] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  console.log(buyer);
+
+  function onUserNameChanged(evt) { 
+    setUserName(evt.target.value) 
+    setBuyer({userName, userPhone, userEmail});
+  };
+  function onUserPhoneChanged(evt) { 
+    setUserPhone(evt.target.value) 
+    setBuyer({userName, userPhone, userEmail});
+  };
+  function onUserEmailChanged(evt) { 
+    setUserEmail(evt.target.value) 
+    setBuyer({userName, userPhone, userEmail});
+  };
+
+  // --- CART ---
   // Calculate total $ of cart contents 
-  let { history } = useHistory();
+  // let { history } = useHistory();
+  // const { user } = useUserContext();
   const { cart, removeFromCart, clearCart } = useCartContext();
   let cartTotal = 0;
   if (cart === null) {
@@ -17,38 +41,28 @@ const Cart = () => {
     let eachItemTotal = 0;
     eachItemTotal = cart.map(item => item.price * item.qtyInCart);
     cartTotal = eachItemTotal.reduce((total, num) => total + num, 0);
-  }
+  };
 
 
-
-  // Reemplazo temporario de formulario de compra
-  async function createOrder() { // asignarlo a un botón de Checkout
+  // --- ORDER ---
+  async function createOrder() {
+    // Creates new order form
     const newOrder = {
-      buyer: { name: 'Mariano', phone: '+541165456545', email: 'asd@asd' },
-      items: cart,
-      // items: [
-      //   { id: '1', title: 'zapas', price: 200, quantity: 2 },
-      //   { id: '2', title: 'gorro', price: 100, quantity: 1 },
-      // ], // reemplazar por cart.map(i => ({})); etc...
-      date: firebase.firestore.FieldValue.serverTimestamp(), // tenemos que usar la hora del servidor de Firebase
-      total: cartTotal,
+      buyer: buyer,
+      items: cart.map(i => ({ id: i.id, title: i.title, quantity: i.qtyInCart, price: i.price })),
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      total: cartTotal
     };
-    console.log('newOrder: ', newOrder);
-
-    // --------------
-
     // Defines functions to Add order to "orders" collection
     const db = getFirestore();
-    const orders = db.collection("orders"); // Esto buscará o creará una collection en firebase
-
-    
+    const orders = db.collection("orders");
     try {
       // Exectutes Add order to "orders"
       const doc = await orders.add(newOrder);
+      // Returns a success message with the order ID
       const orderId = doc.id;
       alert(`Order created with id: ${orderId}`);
-      // Executes Update items' stock
-      // Defines functions to Update each sold item's stock
+      // Defines functions to Update item's stock
       const itemsToUpdate = db.collection("items").where(firebase.firestore.FieldPath.documentId(), 'in', cart.map(i => i.id));
       const query = await itemsToUpdate.get();
       const batch = db.batch();
@@ -59,28 +73,18 @@ const Cart = () => {
         } else {
           notEnoughStock.push({ ...docSnapshot.data(), id: docSnapshot.id });
         }
-      })
+      });
+      // Execution of Update items' stock
       if (notEnoughStock.length === 0) {
         await batch.commit();
-      }
+      };
       clearCart([]);
+      setBuyer({});
+      console.log(`buyer after checkout is: ${buyer}`);
       // history.push("/");
     } catch (err) {
       console.log('!!!Error creating order: ', err);
     }
-
-    // Otra forma de ejecutar la promesa:
-    // orders.add(newOrder).then(id => {
-    //   console.log('Order created with id: ', id);
-    // });
-
-    // --------------
-
-
-
-    // const itemsQueryByManyId = await db.collection("items").get();
-    // itemsQueryByManyId.where(firebase.firestore.FieldPath.documentId(), 'in', ['acá van los id']).get();
-
   }
 
   return (
@@ -118,20 +122,19 @@ const Cart = () => {
                   </div>
                 ))}
                 <div className="col-12 bg-secondary py-2 mb-1 rounded d-flex justify-content-end">
-                  <p className="my-auto">Total: {cartTotal}</p>
+                  <p className="my-auto">Total: ${cartTotal}</p>
                 </div>
               </ul>
             </>
             <button onClick={() => clearCart([])} className="btn btn-secondary rounded shadow-none mx-auto">Clear Cart</button>
           </>}
-          {/* <div className="container">
-          <OrderForm />
-        </div> */}
-          <button onClick={createOrder} className="btn btn-secondary rounded shadow-none mx-auto">Checkout</button>
+          <UserForm buyer={buyer} userNameChange={onUserNameChanged} userPhoneChange={onUserPhoneChanged} userEmailChange={onUserEmailChanged} />
+          {userName && userPhone && userEmail && 
+          <button onClick={createOrder} className="btn btn-secondary rounded shadow-none mx-auto">Checkout</button>}
         </div>
       </div>
     </>
   )
-}
+};
 
 export default Cart;

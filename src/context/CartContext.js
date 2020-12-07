@@ -1,14 +1,12 @@
 import React, { useState, useContext } from 'react';
 
 export const CartContext = React.createContext([]);
-
 export const useCartContext = () => useContext(CartContext);
 
 export default function CartProvider({ defaultCart = [], children }) {
   const [cart, setCart] = useState(defaultCart); // Array de items
   // Es nuestro almacén de estado de compra
   // Funciona como una especie de API interna
-
   
   function addToCart(newItem, qtyToCart) {
     newItem.qtyInCart = qtyToCart;
@@ -35,4 +33,4 @@ export default function CartProvider({ defaultCart = [], children }) {
   return <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
     {children}
   </CartContext.Provider>
-}
+};

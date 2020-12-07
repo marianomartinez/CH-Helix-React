@@ -1,27 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useCartContext } from '../context/CartContext';
-
-// Router
+import React, { useState /*, useEffect */ } from 'react';
 import { Link } from 'react-router-dom';
-
-// Components
+import { useCartContext } from '../context/CartContext';
 import ItemCount from './ItemCount';
 
-// Media
-// import icon from '../images/blocks/distortion.PNG';
-
-// function onAdd(qty) {
-//   console.log(`Adding ${qty}`);
-// }
 const ItemDetail = ({ item }) => {
   const [qtyToCart, setQtyToCart] = useState();
-  const [checkoutBtn, setCheckoutBtn] = useState(false);
+  const [checkoutBtnState, setCheckoutBtnState] = useState(false);
+
+  console.log(`ItemDetail.JS (ANDA) item is: ${item.title}`);
 
   function onAddToCart(count) {
     setQtyToCart(count);
-    // alert(`ItemDetail has (count) ${count} item(s) on cart`);
-    // alert(`ItemDetail has (qtyToCart) ${qtyToCart} item(s) on cart`);
-    setCheckoutBtn(true);
+    setCheckoutBtnState(true);
   }
 
   const { addToCart } = useCartContext();
@@ -31,7 +21,7 @@ const ItemDetail = ({ item }) => {
       <div className="row bg-secondary mb-1 rounded d-flex">
         <div className="col-12 col-md-6">
           <figure className="my-auto p-1">
-            <img className="w-100 rounded" src={item.imageURL} alt="distortion" />
+            <img className="w-100 rounded" src={item.imageURL} alt={item.title} />
           </figure>
         </div>
         <div className="col-12 col-md-6 pl-2 rounded d-flex flex-wrap justify-content-center">
@@ -42,8 +32,9 @@ const ItemDetail = ({ item }) => {
           </div>
           <div className="align-self-end">
             {/* <ItemCount initial={2} min={1} stock={5} onAdd={count => alert(`Agregados al carrito: ${count}`)} /> */}
-            {!checkoutBtn && <ItemCount initial={2} min={1} stock={5} onAddClick={onAddToCart} />}
-            {checkoutBtn &&
+            {!checkoutBtnState &&
+              <ItemCount initial={2} min={1} stock={5} onAddClick={onAddToCart} />}
+            {checkoutBtnState &&
               <Link to="/cart">
                 <div className="py-2">
                   <div className="w-100 text-center">

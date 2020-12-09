@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const OrderCompleted = (orderId) => {
   return (
@@ -8,6 +8,6 @@ const OrderCompleted = (orderId) => {
       </h2>
     </div>
   )
-}
+};
 
 export default OrderCompleted;

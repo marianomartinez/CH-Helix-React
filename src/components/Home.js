@@ -1,22 +1,15 @@
 import React from 'react';
-//Components
 import ItemListContainer from './ItemListContainer';
-//Bootstrap
-import {Container} from 'react-bootstrap';
 
-let style = {
-    "text-align": "center"
-}
+let greeting = () => { return <h2>Welcome to "Helix Effects store"</h2> };
 
-function greeting() {return <h2>Welcome to "Helix Effects store"</h2>}; // !!! AGREGAR styling
-
-function Home(props) {
+function Home() {
     return (
-        <Container className="bg-dark">
-            <h2 style={style}>{greeting()}</h2>
+        <div className="container bg-dark">
+            <h2 className="pt-5 text-center">{greeting}</h2>
             <ItemListContainer />
-        </Container>
+        </div>
     )
-}
+};
 
 export default Home;

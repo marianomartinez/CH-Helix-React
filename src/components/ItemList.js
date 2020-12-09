@@ -1,5 +1,4 @@
 import React from 'react';
-// Components
 import Item from './Item';
 
 const ItemList = ({ items, title }) => {
@@ -7,10 +6,10 @@ const ItemList = ({ items, title }) => {
         <div className="container">
             <h3 style={{ textAlign: "center" }}>{title}</h3>
             <ul className="list-unstyled">
-                {items.map((item, i) => (<Item {...item} key={i} />))}
+                {items.map((item, i) => (<Item item={item} key={i} />))}
             </ul>
         </div>
     )
-}
+};
 
 export default ItemList;

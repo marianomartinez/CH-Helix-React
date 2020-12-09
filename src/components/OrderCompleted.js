@@ -8,6 +8,6 @@ const OrderCompleted = (orderId) => {
       </h2>
     </div>
   )
-}
+};
 
 export default OrderCompleted;

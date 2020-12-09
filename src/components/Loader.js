@@ -6,4 +6,4 @@ export default function Loader() {
       <p>loading...</p>
     </div>
   )
-}
+};

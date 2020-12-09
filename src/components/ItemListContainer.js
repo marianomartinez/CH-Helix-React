@@ -19,15 +19,13 @@ const ItemListContainer = () => {
       itemCollection.get().then((querySnapshot) => {
         if (querySnapshot.size === 0) { console.log('No results') };
         setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-      })
-        .catch(err => { console.log(err) });
+      }).catch(err => { console.log(err) });
     } else {
       const catCollection = itemCollection.where('categoryId', '==', categoryId)
       catCollection.get().then((querySnapshot) => {
         if (querySnapshot.size === 0) { console.log('No results') };
         setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-      })
-        .catch(err => { console.log(err) });
+      }).catch(err => { console.log(err) });
     }
   }, [categoryId]);
 
@@ -39,6 +37,6 @@ const ItemListContainer = () => {
         title={categoryId ? categoryId : defaultTitle} />
     </div>
   )
-}
+};
 
 export default ItemListContainer;

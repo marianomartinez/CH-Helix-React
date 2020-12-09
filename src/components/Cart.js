@@ -1,38 +1,26 @@
 import React, { useState } from 'react';
 import { useCartContext } from '../context/CartContext';
 import UserForm from './UserForm';
-import { Link, /* useHistory */ } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { getFirestore } from '../firebase';
 
 const Cart = () => {
 
-  // --- BUYER ---
-
-  const [buyer, setBuyer] = useState('');
+  // --- BUYER---
   const [userName, setUserName] = useState('');
   const [userPhone, setUserPhone] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  console.log(buyer);
+  const [userEmailConfirm, setUserEmailConfirm] = useState('');
 
-  function onUserNameChanged(evt) { 
-    setUserName(evt.target.value) 
-    setBuyer({userName, userPhone, userEmail});
-  };
-  function onUserPhoneChanged(evt) { 
-    setUserPhone(evt.target.value) 
-    setBuyer({userName, userPhone, userEmail});
-  };
-  function onUserEmailChanged(evt) { 
-    setUserEmail(evt.target.value) 
-    setBuyer({userName, userPhone, userEmail});
-  };
+  function onUserNameChanged(evt) { setUserName(evt.target.value); };
+  function onUserPhoneChanged(evt) { setUserPhone(evt.target.value); };
+  function onUserEmailChanged(evt) { setUserEmail(evt.target.value); };
+  function onUserEmailConfirmChanged(evt) { setUserEmailConfirm(evt.target.value); };
 
   // --- CART ---
-  // Calculate total $ of cart contents 
-  // let { history } = useHistory();
-  // const { user } = useUserContext();
+  // Calculate total price of cart contents 
   const { cart, removeFromCart, clearCart } = useCartContext();
   let cartTotal = 0;
   if (cart === null) {
@@ -43,21 +31,21 @@ const Cart = () => {
     cartTotal = eachItemTotal.reduce((total, num) => total + num, 0);
   };
 
-
   // --- ORDER ---
   async function createOrder() {
-    // Creates new order form
+    // Create new order form
     const newOrder = {
-      buyer: buyer,
+      buyer: { userName, userPhone, userEmail },
       items: cart.map(i => ({ id: i.id, title: i.title, quantity: i.qtyInCart, price: i.price })),
       date: firebase.firestore.FieldValue.serverTimestamp(),
-      total: cartTotal
+      total: cartTotal,
+      status: "completed"
     };
-    // Defines functions to Add order to "orders" collection
+    // Define functions to Add order to "orders" collection
     const db = getFirestore();
     const orders = db.collection("orders");
     try {
-      // Exectutes Add order to "orders"
+      // Exectute order addition to "orders"
       const doc = await orders.add(newOrder);
       // Returns a success message with the order ID
       const orderId = doc.id;
@@ -79,61 +67,54 @@ const Cart = () => {
         await batch.commit();
       };
       clearCart([]);
-      setBuyer({});
-      console.log(`buyer after checkout is: ${buyer}`);
-      // history.push("/");
     } catch (err) {
       console.log('!!!Error creating order: ', err);
     }
-  }
+  };
 
   return (
-    <>
-      <div className="container bg-dark">
-        <div className="container d-flex flex-wrap">
-          {!cart.length &&
-            <>
-              <h3 className="col-12 text-center">Your cart is empty</h3>
-              <Link className="col-12 text-center" to="/">
-                <button className="btn btn-secondary rounded shadow-none mx-auto">Browse items</button>
-              </Link>
-            </>}
-
-          {cart.length && <>
-            <>
-              <h3 className="col-12 text-center">Your cart contents</h3>
-              <ul className="col-12 list-unstyled">
-                {cart.map(cartItem => (
-                  <div className="col-12 bg-secondary py-2 mb-1 rounded d-flex flex-no-wrap">
-                    <figure className="col-1 my-auto">
-                      <img className="w-100 rounded" src={cartItem.imageURL} alt="distortion" />
-                    </figure>
-                    <div className="col-7 pl-2 my-auto rounded">
-                      <p className="my-1">Model: {cartItem.title}</p>
-                      <p className="my-1">Based on: {cartItem.realName}</p>
-                    </div>
-                    <div className="col-2 my-auto">
-                      <p className="my-1 text-center">${cartItem.price} x {cartItem.qtyInCart}</p>
-                    </div>
-                    <div className="col-1 my-auto">
-                      <p className="my-1 text-center">${cartItem.price * cartItem.qtyInCart}</p>
-                    </div>
-                    <button onClick={() => removeFromCart(cartItem.id)} className="col-1 btn btn-secondary rounded shadow-none ml-1">Remove</button>
+    <div className="container bg-dark mt-5">
+      <div className="container d-flex flex-wrap">
+        {cart.length > 0 ?
+          <>
+            <h3 className="col-12 text-center">Your cart contents</h3>
+            <ul className="col-12 list-unstyled">
+              {cart.map(cartItem => (
+                <div className="col-12 bg-secondary py-2 mb-1 rounded d-flex flex-no-wrap">
+                  <figure className="col-1 my-auto">
+                    <img className="w-100 rounded" src={cartItem.imageURL} alt="distortion" />
+                  </figure>
+                  <div className="col-7 pl-2 my-auto rounded">
+                    <p className="my-1">Model: {cartItem.title}</p>
+                    <p className="my-1">Based on: {cartItem.realName}</p>
                   </div>
-                ))}
-                <div className="col-12 bg-secondary py-2 mb-1 rounded d-flex justify-content-end">
-                  <p className="my-auto">Total: ${cartTotal}</p>
+                  <div className="col-2 my-auto">
+                    <p className="my-1 text-center">${cartItem.price} x {cartItem.qtyInCart}</p>
+                  </div>
+                  <div className="col-1 my-auto">
+                    <p className="my-1 text-center">${cartItem.price * cartItem.qtyInCart}</p>
+                  </div>
+                  <button onClick={() => removeFromCart(cartItem.id)} className="col-1 btn btn-secondary rounded shadow-none ml-1">Remove</button>
                 </div>
-              </ul>
-            </>
+              ))}
+              <div className="col-12 bg-secondary py-2 mb-1 rounded d-flex justify-content-end">
+                <p className="my-auto">Total: ${cartTotal}</p>
+              </div>
+            </ul>
             <button onClick={() => clearCart([])} className="btn btn-secondary rounded shadow-none mx-auto">Clear Cart</button>
+            <UserForm userNameChange={onUserNameChanged} userPhoneChange={onUserPhoneChanged} userEmailChange={onUserEmailChanged} userEmailConfirmChange={onUserEmailConfirmChanged} />
+            {userName && userPhone && userEmail && userEmail === userEmailConfirm &&
+              <button onClick={createOrder} className="btn btn-secondary rounded shadow-none mx-auto">Checkout</button>}
+          </>
+          :
+          <>
+            <h3 className="col-12 text-center">Your cart is empty</h3>
+            <Link className="col-12 text-center" to="/">
+              <button className="btn btn-secondary rounded shadow-none mx-auto">Browse items</button>
+            </Link>
           </>}
-          <UserForm buyer={buyer} userNameChange={onUserNameChanged} userPhoneChange={onUserPhoneChanged} userEmailChange={onUserEmailChanged} />
-          {userName && userPhone && userEmail && 
-          <button onClick={createOrder} className="btn btn-secondary rounded shadow-none mx-auto">Checkout</button>}
-        </div>
       </div>
-    </>
+    </div>
   )
 };
 

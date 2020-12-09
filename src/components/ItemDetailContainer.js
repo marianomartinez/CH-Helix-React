@@ -9,28 +9,32 @@ import "react-loadingmask/dist/react-loadingmask.css";
 const ItemDetailContainer = () => {
     const [loading, setLoading] = useState(true);
     const [item, setItem] = useState({});
-    const { itemId } = useParams();
+    const { id } = useParams();
     const category = item.categoryId;
     useEffect(() => {
         const db = getFirestore();
         const itemCollection = db.collection("items");
-        const filtered = itemCollection.doc(itemId);
+        const filtered = itemCollection.doc(id);
         filtered.get().then((doc) => {
-            if (!doc.exists) { console.log('No results') };
-            setItem({ id: doc.id, ...doc.data() });
-            setLoading(false);
-        })
-            .catch(err => { console.log(err) });
-    }, [itemId]);
+            if (!doc.exists) {
+                console.log('No results');
+                setItem(0);
+                setLoading(false);
+            } else {
+                setItem({ id: doc.id, ...doc.data() });
+                setLoading(false);
+            }
+        }).catch(err => { console.log(err) });
+    }, [id]);
 
-    return <>
+    return (
         <LoadingMask loading={loading}>
-            <div className="container">
+            <div className="container mt-5">
                 <h3 style={{ textAlign: "center" }}>{category}</h3>
                 <ItemDetail item={item} />
             </div>
         </LoadingMask>
-    </>
-}
+    )
+};
 
 export default ItemDetailContainer;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import CartProvider /* , { CartContext }*/ from './context/CartContext';
+import CartProvider from './context/CartContext';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import ItemDetailContainer from './components/ItemDetailContainer';
@@ -31,7 +31,7 @@ function App() {
             <Route exact path="/about">
               <About />
             </Route>
-            <Route exact path="/item/:itemId">
+            <Route exact path="/item/:id">
               <ItemDetailContainer />
             </Route>
             <Route exact path="/cart">

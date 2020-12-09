@@ -3,7 +3,7 @@ import ItemListContainer from './ItemListContainer';
 
 let greeting = () => { return <h2>Welcome to "Helix Effects store"</h2> };
 
-function Home(props) {
+function Home() {
     return (
         <div className="container bg-dark">
             <h2 className="pt-5 text-center">{greeting}</h2>
